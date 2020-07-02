@@ -1,6 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+
 import './App.css';
+import './index.css';
+import data from './data';
+import HomeScreen from './Screens/HomeScreen';
+import ProductScreen from './Screens/ProductScreen';
+
 
 function App() {
 
@@ -12,56 +18,44 @@ function App() {
 
   }
   return (
-    <div className='grid-container'>
-    <header className='header'>
-      <div className='brand'>
-        <button onClick={openMenu}>
-          &#9776;
+    <BrowserRouter>
+      <div className='grid-container'>
+        <header className='header'>
+          <div className='brand'>
+            <button onClick={openMenu}>
+              &#9776;
         </button>
-        <a href='index.html'>piKel</a>
+        <Link to ='/'>piKel</Link>
+          </div>
+          <div className='heade r-links'>
+            <a href='cart.html'>Cart</a>
+            <a href='signin.html'>Sign In</a>
+          </div>
+        </header>
+        <aside className='sidebar'>
+          <h3>Shopping Ccategories</h3>
+          <button className='sidebar-close-button' onClick={closeMenu}>x</button>
+          <ul>
+            <li>
+              <a href='index.html'>Plush</a>
+            </li>
+            <li>
+              <a href='index.html'>Poster</a>
+            </li>
+          </ul>
+        </aside>
+        <main className='main'>
+          <div className='content'>
+            <Route path='/product/:id' component={ProductScreen} />
+            <Route exact path='/' component={HomeScreen} />
+          </div>
+        </main>
+        <footer className='footer'>
+          All right reserved.
+      </footer>
       </div>
-      <div className='header-links'>
-        <a href='cart.html'>Cart</a>
-        <a href='signin.html'>Sign In</a>
-      </div>
-    </header>
-    <aside className='sidebar'>
-     <h3>Shopping Ccategories</h3>
-     <button className='sidebar-close-button' onClick={closeMenu}>x</button>
-     <ul>
-       <li>
-         <a href='index.html'>Plush</a>
-       </li>
-       <li>
-         <a href='index.html'>Poster</a>
-       </li>
-     </ul>
-    </aside>
-    <main className='main'>
-      <div className='content'>
-        <ul className='products'>
-          <li>
-            <div className='product'>
-              <img className='product-image' src='./images/pickleRick.jpg' alt='product' />
-              <div className='product-name'>
-                <a href='product.html'>Pickle Rick</a>
-              </div>
-              <div className='product-brand'>
-                AdultSwim
-              </div>
-              <div className='product-price'>
-                $60
-              </div>
-              <div className='product-rating'>4.5 Stars (10 reviews)</div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </main>
-    <footer className='footer'>
-      All right reserved.
-    </footer>
-  </div>
+    </BrowserRouter>
+
   );
 }
 
