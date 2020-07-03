@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { listProducts } from '../actions/productActions';
 
+import './../index.css';
+
 
 
 function HomeScreen(props) {
