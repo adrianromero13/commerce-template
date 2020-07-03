@@ -2,23 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { listProducts } from '../actions/productActions';
 
 
 
 function HomeScreen(props) {
 
-  const [products, setProduct] = useState([]);
   const productList = useSelector(state => state.productList);
   const { products, loading, error } = productList;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(listProducts()); // here, next is create actions for listProducts
+    dispatch(listProducts()); // here, next is create actions for listProducts 
     return () => {
       //
     };
   }, [])
 
   return (
+    loading? <div>Loading...</div> :
+    error? <div>{error}</div>:
+    
     <ul className='products'>
       {
         products.map(product =>
