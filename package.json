@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/adrianromero13/commerce-template#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",
