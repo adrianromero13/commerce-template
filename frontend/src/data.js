@@ -1,6 +1,7 @@
 
 module.exports = {
-  products: [{
+  products: [
+    {
     _id: '123',
     name: 'Pickle Rick',
     category: 'Plush',

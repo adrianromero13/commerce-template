@@ -8,7 +8,8 @@ module.exports = {
     price: 60,
     brand: 'piKel',
     rating: 4.5,
-    numReviews: 10
+    numReviews: 10,
+    countInStock: 6
   },
   {
     _id: '1324',
@@ -18,7 +19,8 @@ module.exports = {
     price: 40,
     brand: 'piKel',
     rating: 4.4,
-    numReviews: 15
+    numReviews: 15,
+    countInStock: 4
   },
   {
     _id: '1423',
@@ -28,7 +30,8 @@ module.exports = {
     price: 35,
     brand: 'piKel',
     rating: 3.5,
-    numReviews: 23
+    numReviews: 23,
+    countInStock: 8
   },
   {
     _id: '2341',
@@ -38,7 +41,8 @@ module.exports = {
     price: 60,
     brand: 'piKel',
     rating: 4.5,
-    numReviews: 100 
+    numReviews: 100 ,
+    countInStock: 12
   }
   ]
 };
