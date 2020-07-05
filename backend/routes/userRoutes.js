@@ -1,15 +1,38 @@
 import express from 'express';
 
 import User from './../models/userModel';
-import { getToken } from '../util';
+import { getToken, isAuth } from '../util';
 
 const router = express.Router();
+
+//set up puth method for creating user related changes
+router.put('/:id', isAuth, async(req, res) => {
+  // fetch userId
+  const userId = req.params.id;
+  const user = await User.findById(userId);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.password = req.body.password || user.password;
+    // is user updating?
+    const updatedUser = await user.save();
+    res.send({
+      _id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: getToken(updatedUser),
+    });
+  } else {
+    res.status(404).send({ message: 'User Not Found' });
+  }
+});
 
 router.post('/signin', async (req, res) => {
 
   const signinUser = await User.findOne({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
   });
   if(signinUser){
     res.send({
@@ -18,11 +41,33 @@ router.post('/signin', async (req, res) => {
       email: signinUser.email,
       isAdmin: signinUser.isAdmin,
       token: getToken(signinUser)
-    })
+    });
   } else {
     res.status(401).send({ msg: 'Invalid email/password. Try Again'});
   }
-})
+});
+
+// set up post method for creating user
+router.post('/register', async (req, res) => {
+  // fetch user info
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  const newUser = await user.save();
+  if (newUser) {
+    res.send({
+      _id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      isAdmin: newUser.isAdmin,
+      token: getToken(newUser),
+    });
+  } else {
+    res.status(401).send({ message: 'Invalid User Data. Please try again' });
+  }
+});
 
 router.get('/createadmin', async (req, res) => {
   try {
@@ -37,6 +82,6 @@ router.get('/createadmin', async (req, res) => {
   } catch (error) {
     res.send({ msg: error.message }); 
   }
-})
+});
 
 export default router;
