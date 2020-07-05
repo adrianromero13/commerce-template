@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
+import ProductsScreen from './screens/ProductsScreen';
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <main className='main'>
           <div className='content'>
             <Route path='/signin' component={SigninScreen} />
+            <Route path='/products' component={ProductsScreen} />
             <Route path='/product/:id' component={ProductScreen} />
             <Route path='/cart/:id?' component={CartScreen} />
             <Route exact path='/' component={HomeScreen} />
