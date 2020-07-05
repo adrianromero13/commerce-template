@@ -14,11 +14,11 @@ import {
 
 function productListReducer(
   state = { products: [] },
-  action
+  action,
 ) {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
-      return { loading: true };
+      return { loading: true, products: [] };
     case PRODUCT_LIST_SUCCESS:
       return { loading: false, products: action.payload };
     case PRODUCT_LIST_FAIL:
@@ -27,9 +27,10 @@ function productListReducer(
       return state;
   }
 }
+
 function productDetailsReducer(
   state = { product: {} },
-  action
+  action,
 ) {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
@@ -42,9 +43,10 @@ function productDetailsReducer(
       return state;
   }
 }
+
 function productSaveReducer(
   state = { product: {} },
-  action
+  action,
 ) {
   switch (action.type) {
     case PRODUCT_SAVE_REQUEST:
