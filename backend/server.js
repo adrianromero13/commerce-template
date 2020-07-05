@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import path from 'path';
 // import fileUpload from 'express-fileupload';
 // import path from 'path';
 
@@ -14,11 +15,13 @@ import config from './config';
 dotenv.config();
 
 const mongodbURL = config.MONGODB_URL;
-mongoose.connect(mongodbURL, {
+mongoose
+.connect(mongodbURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
-}).catch(error => console.log(error.reason));
+})
+.catch(error => console.log(error.reason));
 
 const app = express();
 app.use(bodyParser.json());

@@ -1,7 +1,7 @@
 import express from 'express';
 
 import Product from './../models/productModel';
-import { getToken } from '../util';
+import { isAuth, isAdmin } from '../util';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 });
 
 // api router for setting new products into database
-router.post('/', async (req, res) => {
+router.post('/', isAuth, isAdmin, async (req, res) => {
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
@@ -21,23 +21,21 @@ router.post('/', async (req, res) => {
     category: req.body.category,
     countInStock: req.body.countInStock,
     description: req.body.description,
-    // rating: req.body.rating,
-    // numReviews: req.body.numReviews,
+    rating: req.body.rating,
+    numReviews: req.body.numReviews,
   });
   const newProduct = await product.save();
   if (newProduct) {
     return res.status(201).send({ message: 'New Product Created', data: newProduct });
-  } else {
-    return res.status(500).send({ message: 'Error in creating product' });
   }
+  return res.status(500).send({ message: 'Error in creating product' });
 });
 
 // api route for updating product using put method
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAuth, isAdmin, async (req, res) => {
   const productId = req.params.id;
-  const product = await product.findOne({ _id: productId });
+  const product = await product.findByID(productId);
   if (product) {
-
     product.name = req.body.name;
     product.price = req.body.price;
     product.image = req.body.image;
@@ -51,7 +49,7 @@ router.put('/:id', async (req, res) => {
       return res.status(201).send({ message: 'Product successfully updated', data: updatedProduct });
     }
   }
-  return res.status(201).send({ message: 'Error Updating Product' });
+  return res.status(500).send({ message: 'Error Updating Product' });
 });
 
 export default router;

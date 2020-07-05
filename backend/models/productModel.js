@@ -41,7 +41,8 @@ const productSchema = new mongoose.Schema({
   numReviews: {
       type: Number,
       default: 0
-  }
+  },
+  // reviews: [reqviewSchema],
 });
 
 const productModel = mongoose.model('Product', productSchema);

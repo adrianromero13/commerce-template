@@ -19,9 +19,10 @@ function ProductsScreen(props) {
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
 
-  const productList = useSelector(state => state.productList);
+  const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
-  const productSave = useSelector(state => state.productSave);
+
+  const productSave = useSelector((state) => state.productSave);
   const {
     loading: loadingSave,
     success: successSave,
@@ -53,7 +54,8 @@ const openModal = (product) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveProduct({
+    dispatch(
+      saveProduct({
       _id: id,
       name,
       price,
@@ -71,8 +73,7 @@ const openModal = (product) => {
         <h3>Products</h3>
         <button onClick={() =>openModal({})} className='button primary'>Create Product</button>
       </div>
-      {modalVisible && 
-      
+      {modalVisible && (
       <div className='form'>
         <form onSubmit={submitHandler}>
           <ul className='form-container'>
@@ -165,7 +166,7 @@ const openModal = (product) => {
           </ul>
         </form>
       </div>
-      }
+      )}
 
 
       <div className='product-list'>
@@ -189,7 +190,7 @@ const openModal = (product) => {
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
                 <td>
-                  <button onClick={() => openModal(product)}>Edit</button>
+                  <button className='button' onClick={() => openModal(product)}>Edit</button>
                   {' '}
                   {/* <button className='button' onClick={() => deleteHandler(product)}>Delete</button> */}
                 </td>
