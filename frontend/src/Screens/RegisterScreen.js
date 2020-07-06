@@ -5,6 +5,14 @@ import { register } from '../actions/userActions';
 
 function RegisterScreen(props) {
 
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, userInfo, error } = userRegister;
+
   const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
 
   useEffect(() => {
