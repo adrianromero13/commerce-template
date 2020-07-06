@@ -27,7 +27,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
   const newProduct = await product.save();
   if (newProduct) {
     return res
-      .status(201)
+      .status(200)
       .send({ message: 'New Product Created', data: newProduct });
   }
   return res.status(500).send({ message: ' Error in Creating Product.' });
@@ -45,7 +45,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     product.category = req.body.category;
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
-    
+
     const updatedProduct = await product.save();
     if (updatedProduct) {
       return res
@@ -54,6 +54,20 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     }
   }
   return res.status(500).send({ message: ' Error in Updating Product.' });
+});
+
+// api route for deleting products
+router.delete('/:id', isAuth, isAdmin, async (req, res) => {
+  const deletedProduct = await Product.findById(req.params.id);
+  if (deletedProduct) {
+    await deletedProduct.remove();
+    return res
+      .status(200)
+      .send({ message: 'Product Successfully Deleted' });
+  }
+  return res
+    .status(403)
+    .send({ message: 'Error In Deletion, Please Try Again' });
 });
 
 export default router;
