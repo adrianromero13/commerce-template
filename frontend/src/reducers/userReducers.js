@@ -10,7 +10,6 @@ function userSigninReducer(state = {}, action) {
       return { loading: false, error: action.payload };
     default:
       return state;
-
   }
 }
 

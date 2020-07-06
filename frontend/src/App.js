@@ -9,14 +9,13 @@ import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
 import ProductsScreen from './screens/ProductsScreen';
-import { userSigninReducer } from './reducers/userReducers';
 
 
 function App() {
   // set up authorization 
   const userSignin = useSelector((state) => state.userSignin);
   // grab user info
-  const { userInfo } = userSigninReducer;
+  const { userInfo } = userSignin;
 
   const openMenu = () => {
     document.querySelector('.sidebar').classList.add('open');

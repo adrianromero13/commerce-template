@@ -26,15 +26,17 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
   });
   const newProduct = await product.save();
   if (newProduct) {
-    return res.status(201).send({ message: 'New Product Created', data: newProduct });
+    return res
+      .status(201)
+      .send({ message: 'New Product Created', data: newProduct });
   }
-  return res.status(500).send({ message: 'Error in creating product' });
+  return res.status(500).send({ message: ' Error in Creating Product.' });
 });
 
 // api route for updating product using put method
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
   const productId = req.params.id;
-  const product = await product.findByID(productId);
+  const product = await Product.findById(productId);
   if (product) {
     product.name = req.body.name;
     product.price = req.body.price;
@@ -43,13 +45,15 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
     product.category = req.body.category;
     product.countInStock = req.body.countInStock;
     product.description = req.body.description;
-
+    
     const updatedProduct = await product.save();
     if (updatedProduct) {
-      return res.status(201).send({ message: 'Product successfully updated', data: updatedProduct });
+      return res
+        .status(200)
+        .send({ message: 'Product Updated', data: updatedProduct });
     }
   }
-  return res.status(500).send({ message: 'Error Updating Product' });
+  return res.status(500).send({ message: ' Error in Updating Product.' });
 });
 
 export default router;

@@ -19,23 +19,24 @@ const isAuth = (req, res, next) => {
     const onlyToken = token.slice(7, token.length);
     jwt.verify(onlyToken, config.JWT_SECRET, (err, decode) => {
       if (err) {
-        return res.status(401).send({ msg: 'Invalid Token' });
+        return res.status(401).send({ message: 'Invalid Token' });
       }
-      req.user = token;
+      req.user = decode;
       next();
       return
     });
+  } else {
+    return res.status(301).send({ message: 'token is not supplied' });
   }
-  return res.status(301).send({ msg: 'token is not supplied' });
-}
+};
 
 const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     return next();
   } else {
-    return res.status(401).send({ msg: 'Admin Token is not valid.' });
+    return res.status(401).send({ message: 'Admin Token is not valid.' });
   }
-}
+};
 
 export {
   getToken,
