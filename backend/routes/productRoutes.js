@@ -11,6 +11,20 @@ router.get('/', async (req, res) => {
   res.send(products);
 });
 
+// shopping cart api route
+router.get('/:id', async (req, res) => {
+  const product = await Product.findOne({ _id: req.params.id });
+  if (product){
+   return res
+    .status(200)
+    .send(product);
+  } else {
+    return res
+    .status(404)
+    .send({ message: 'Product not found' });
+  }
+})
+
 // api router for setting new products into database
 router.post('/', isAuth, isAdmin, async (req, res) => {
   const product = new Product({
