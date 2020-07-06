@@ -1,4 +1,4 @@
-import React, { useEffect, useStat } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/userActions';
@@ -9,7 +9,8 @@ function RegisterScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
-  
+  const dispatch = useDispatch();
+
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, userInfo, error } = userRegister;
 
