@@ -10,9 +10,40 @@ import {
 
 function OrderScreen(props) {
 
+  // set up constants to be used with getState
+  const orderPay = useSelector(state => state.orderPay);
+  const { 
+    loading: loadingPay,
+    success: successPay,
+    error: errorPay,
+  } = orderPay;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(successPay) {
+      props.history.push('/profile');
+    } else {
+      dispatch(detailsOrder(props.match.params.id));
+    }
+    return () => {
+      //
+    };
+  }, [successPay]);
+
+  // payment handler
+  const handleSuccessPayment = (paymentResult) => {
+    dispatch(payOrder(order, paymentResult));
+  }
+
+  // order details
+  const orderDetails = useSelector(state => state.orderDetails);
+  const { loading, order, error } = orderDetails;
 
   return (
-
+    loading ? <div>Loading ...</div> 
+    : error ? <div>{error}</div>
+    :
     <div>
       <div className='placeOrder'>
         <div className='placeOrder-info'>
