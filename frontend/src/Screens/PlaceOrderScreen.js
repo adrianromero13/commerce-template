@@ -35,7 +35,15 @@ function PlaceOrderScreen(props) {
   const placeOrderHandler = () => {
     // create the order
     dispatch(createOrder({
-      orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice, taxPrice, totalPrice,
+      orderItems: {
+      cartItems, 
+      shipping, 
+      payment, 
+      itemsPrice, 
+      shippingPrice, 
+      taxPrice, 
+      totalPrice,
+      }
     }));
   }
 
@@ -54,10 +62,10 @@ function PlaceOrderScreen(props) {
             <h3>Shipping</h3>
           </div>
           <div>
-            {cart.shipping.address},
-            {cart.shipping.city},
-            {cart.shipping.postalCode},
-            {cart.shipping.country},
+            {cart.shipping.address}, {cart.shipping.city},
+          </div>
+          <div>
+            {cart.shipping.postalCode}, {cart.shipping.country},
           </div>
           <div>
             <h3>Payment</h3>
@@ -69,14 +77,14 @@ function PlaceOrderScreen(props) {
             <ul className='cart-list-container'>
               <li>
                 <h3>Shopping Cart</h3>
-                <div>price</div>
+                <div>Price</div>
               </li>
               {
                 cartItems.length === 0 ?
                   <div>Cart is empty</div>
                   :
                   cartItems.map(item =>
-                    <li>
+                    <li key={item._id}>
                       <div className='cart-image'>
                         <img src={item.image} alt='product' />
                       </div>
@@ -110,6 +118,14 @@ function PlaceOrderScreen(props) {
             <li>
               <div>Items</div>
               <div>${itemsPrice}</div>
+            </li>
+            <li>
+              <div>Shipping</div>
+              <div>${shippingPrice}</div>
+            </li>
+            <li>
+              <div>Tax</div>
+              <div>${taxPrice}</div>
             </li>
             <li>
               <div>Order Total</div>
