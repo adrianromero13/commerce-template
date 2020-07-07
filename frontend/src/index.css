@@ -370,26 +370,26 @@ tbody>tr:nth-child(odd) {
 
 /* Place Order */
 
-.placeorder {
+.placeOrder {
    display: flex;
    flex-grow: wrap;
    padding: 1rem;
    justify-content: space-between;
 }
 
-.placeorder-info {
+.placeOrder-info {
   flex: 3 1 60rem;
 }
 
-.placeorder-action {
+.placeOrder-action {
   flex: 1 1 20rem;
-  border: 1rem #c0c0c0 solid;
+  border: .1rem #c0c0c0 solid;
   border-radius: .5rem;
   background-color: #fcfcfc;
   padding: 1rem;
 } 
 
-.placeorder-info > div {
+.placeOrder-info > div {
   border: .1rem #c0c0c0 solid;
   border-radius: .5rem;
   background-color: #fcfcfc;
@@ -397,7 +397,24 @@ tbody>tr:nth-child(odd) {
   margin: 1rem;
 }
 
-.placeorder-info > div:first-child {
+.placeOrder-info > div:first-child {
   margin-top: 0;
+}
+
+.placeOrder-action > ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.placeOrder-action > ul > li {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.placeOrder-action > ul > li:last-child {
+  font-size: 2rem;
+  color: #c04000;
+  font-weight: bold;
 }
 

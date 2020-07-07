@@ -1,75 +1,35 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import CheckoutSteps from '../components/CheckoutSteps';
-import {createOrder} from '../actions/orderActions';
-
-
-
-
-function PlaceOrderScreen(props) {
-
-  // define cart 
-  const cart = useSelector(state => state.cart);
-  const { cartItems, shipping, payment } = cart;
-  // pricing logic constants
-  const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
-  const shippingPrice = itemsPrice > 100 ? 0 : 10;
-  const taxPrice = 0.10 * itemsPrice;
-  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+import {
+  createOrder,
+  detailsOrder,
+  payOrder,
+} from '../actions/orderActions';
 
 
-  const orderCreate = useSelector(state => state.orderCreate);
-  if (!shipping.address) {
-    props.history.push('/shipping');
-  }
-  
-  else if (!payment.paymentMethod) {
-    props.history.push('/payment');
-  }
-  const { loading, success, error, order } = orderCreate;
-  
-  const dispatch = useDispatch();
+function OrderScreen(props) {
 
-  const placeOrderHandler = () => {
-    // create the order
-    dispatch(createOrder({
-      orderItems: {
-      cartItems, 
-      shipping, 
-      payment, 
-      itemsPrice, 
-      shippingPrice, 
-      taxPrice, 
-      totalPrice,
-      }
-    }));
-  }
-
-  useEffect(() => {
-    if (success) {
-      props.history.push('/order/' + order._id);
-    }
-  }, [success]);
 
   return (
+
     <div>
-      <CheckoutSteps step1 step2 step3 step4 />
       <div className='placeOrder'>
         <div className='placeOrder-info'>
           <div>
             <h3>Shipping</h3>
-          </div>
-          <div>
-            {cart.shipping.address}, {cart.shipping.city}
-          <br/>
-            {cart.shipping.postalCode}, {cart.shipping.country},
+            <div>
+              {order.shipping.address}, {order.shipping.city},
+              {order.shipping.postalCode}, {order.shipping.country},
+            </div>
           </div>
           <div>
             <h3>Payment</h3>
             <div>
-              Payment Method: {cart.payment.paymentMethod}
+              payment Method: {order.payment.paymentMethod}
+            </div>
+            <div>
+              {order.isPaid ? 'Paid at ' + order.paidAt : 'Not Paid.'}
             </div>
           </div>
           <div>
@@ -79,10 +39,10 @@ function PlaceOrderScreen(props) {
                 <div>Price</div>
               </li>
               {
-                cartItems.length === 0 ?
+                order.orderItems.length === 0 ?
                   <div>Cart is empty</div>
                   :
-                  cartItems.map(item =>
+                  order.orderItems.map(item =>
                     <li key={item._id}>
                       <div className='cart-image'>
                         <img src={item.image} alt='product' />
@@ -106,36 +66,41 @@ function PlaceOrderScreen(props) {
             </ul>
           </div>
         </div>
-
         <div className='placeOrder-action'>
           <ul>
-            <li>
-              <button className='button primary full-width' onClick={placeOrderHandler}>Place Order</button>
+            <li className='placeOrder-actions-payment'>
+              {loadingPay && <div>Finishing Payment...</div>}
+              {!order.isPaid &&
+                <payPalButton
+                amount={order.totalPrice}
+                onSuccess={handleSuccessPayment} />
+              }
             </li>
             <li>
               <h3>Order Summary</h3>
             </li>
             <li>
               <div>Items</div>
-              <div>${itemsPrice}</div>
+              <div>${order.itemsPrice}</div>
             </li>
             <li>
               <div>Shipping</div>
-              <div>${shippingPrice}</div>
+              <div>${order.shippingPrice}</div>
             </li>
             <li>
               <div>Tax</div>
-              <div>${taxPrice}</div>
+              <div>${order.taxPrice}</div>
             </li>
             <li>
               <div>Order Total</div>
-              <div>${totalPrice}</div>
+              <div>${order.totalPrice}</div>
             </li>
           </ul>
         </div>
       </div>
     </div>
   )
+
 }
 
-export default PlaceOrderScreen;
+export default OrderScreen;
