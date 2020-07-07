@@ -21,15 +21,15 @@ function PlaceOrderScreen(props) {
 
 
   const orderCreate = useSelector(state => state.orderCreate);
-  const { loading, success, error, order } = orderCreate;
   if (!shipping.address) {
     props.history.push('/shipping');
   }
-
+  
   else if (!payment.paymentMethod) {
     props.history.push('/payment');
   }
-
+  const { loading, success, error, order } = orderCreate;
+  
   const dispatch = useDispatch();
 
   const placeOrderHandler = () => {

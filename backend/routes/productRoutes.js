@@ -7,21 +7,36 @@ const router = express.Router();
 
 // api router for list of products in database
 router.get('/', async (req, res) => {
-  const products = await Product.find({});
+  const category = req.query.category ? { category: req.query.category } : {};
+  const searchKeyword = req.query.searchKeyword ? {
+    name: {
+      $regex: req.query.searchKeyword,
+      $options: 'i',
+    },
+  }
+    : {};
+  const sortOrder = req.query.sortOrder
+    ? req.query.sortOrder === 'lowest'
+      ? { price: 1 }
+      : { price: -1 }
+    : { _id: -1 };
+  const products = await Product.find({...category, ...searchKeyword}).sort(
+    sortOrder
+  );
   res.send(products);
 });
 
 // shopping cart api route
 router.get('/:id', async (req, res) => {
   const product = await Product.findOne({ _id: req.params.id });
-  if (product){
-   return res
-    .status(200)
-    .send(product);
+  if (product) {
+    return res
+      .status(200)
+      .send(product);
   } else {
     return res
-    .status(404)
-    .send({ message: 'Product not found' });
+      .status(404)
+      .send({ message: 'Product not found' });
   }
 })
 
@@ -45,6 +60,27 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
       .send({ message: 'New Product Created', data: newProduct });
   }
   return res.status(500).send({ message: ' Error in Creating Product.' });
+});
+
+// api route for post reviews
+router.post('/:id/reviews', isAuth, async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    const review = {
+      name: req.body.name,
+      rating: Number(req.body.rating),
+      comment: req.body.comment,
+    };
+    product.reviews.reduce((a, c) => c.rating + a, 0) /
+    product.reviews.length;
+    const updatedProduct = await product.save();
+    res.status(201).send({
+      data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+      message: 'Review Saved Successfully.',
+    });
+  } else {
+    res.status(404).send({ message: 'Product Not Found' });
+  }
 });
 
 // api route for updating product using put method

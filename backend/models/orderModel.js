@@ -1,4 +1,4 @@
-import mongoose, { MongooseDocument } from 'mongoose';
+import mongoose from 'mongoose';
 
 // set shipping schema
 const shippingSchema = {
@@ -54,7 +54,7 @@ const orderItemSchema = new mongoose.Schema({
 });
 
 // set up order schema
-const orderSchema = new MongooseDocument.Schema({
+const orderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
