@@ -1,20 +1,18 @@
 import express from 'express';
 
-import User from './../models/userModel';
+import User from '../models/userModel';
 import { getToken, isAuth } from '../util';
 
 const router = express.Router();
 
-//set up puth method for creating user related changes
-router.put('/:id', isAuth, async(req, res) => {
-  // fetch userId
+// set up puth method for creating user related changes
+router.put('/:id', isAuth, async (req, res) => {
   const userId = req.params.id;
   const user = await User.findById(userId);
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.password = req.body.password || user.password;
-    // is user updating?
     const updatedUser = await user.save();
     res.send({
       _id: updatedUser.id,
@@ -34,7 +32,7 @@ router.post('/signin', async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
-  if(signinUser) {
+  if (signinUser) {
     res.send({
       _id: signinUser.id,
       name: signinUser.name,
@@ -43,13 +41,12 @@ router.post('/signin', async (req, res) => {
       token: getToken(signinUser),
     });
   } else {
-    res.status(401).send({ message: 'Invalid email/password, please try again' });
+    res.status(401).send({ message: 'Invalid Email or Password.' });
   }
 });
 
 // set up post method for creating user
 router.post('/register', async (req, res) => {
-  // fetch user info
   const user = new User({
     name: req.body.name,
     email: req.body.email,
@@ -65,7 +62,7 @@ router.post('/register', async (req, res) => {
       token: getToken(newUser),
     });
   } else {
-    res.status(401).send({ message: 'Invalid User Data. Please try again' });
+    res.status(401).send({ message: 'Invalid User Data.' });
   }
 });
 
@@ -75,12 +72,12 @@ router.get('/createadmin', async (req, res) => {
       name: 'Adrian',
       email: 'adrianromero022120@gmail.com',
       password: '1234',
-      isAdmin: true
+      isAdmin: true,
     });
     const newUser = await user.save();
     res.send(newUser);
   } catch (error) {
-    res.send({ msg: error.message }); 
+    res.send({ msg: error.message });
   }
 });
 

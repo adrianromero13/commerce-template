@@ -7,6 +7,8 @@ import {
   payOrder,
 } from '../actions/orderActions';
 
+import PayPalButton from './../components/PaypalButton';
+
 
 function OrderScreen(props) {
 
@@ -102,7 +104,7 @@ function OrderScreen(props) {
             <li className='placeOrder-actions-payment'>
               {loadingPay && <div>Finishing Payment...</div>}
               {!order.isPaid &&
-                <payPalButton
+                <PayPalButton
                 amount={order.totalPrice}
                 onSuccess={handleSuccessPayment} />
               }

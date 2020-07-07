@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import jwt from 'jsonwebtoken';
 import config from './config';
 
@@ -8,10 +9,10 @@ const getToken = (user) => {
     email: user.email,
     isAdmin: user.isAdmin,
   },
-    config.JWT_SECRET,
-    { expiresIn: '48h' },
+  config.JWT_SECRET,
+  { expiresIn: '48h' },
   )
-}
+};
 
 const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
@@ -23,7 +24,6 @@ const isAuth = (req, res, next) => {
       }
       req.user = decode;
       next();
-      return
     });
   } else {
     return res.status(301).send({ message: 'token is not supplied' });
@@ -33,13 +33,12 @@ const isAuth = (req, res, next) => {
 const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     return next();
-  } else {
-    return res.status(401).send({ message: 'Admin Token is not valid.' });
   }
+  return res.status(401).send({ message: 'Admin Token is not valid.' });
 };
 
 export {
   getToken,
   isAdmin,
-  isAuth
+  isAuth,
 };

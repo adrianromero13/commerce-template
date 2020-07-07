@@ -1,6 +1,7 @@
+/* eslint-disable no-nested-ternary */
 import express from 'express';
 
-import Product from './../models/productModel';
+import Product from '../models/productModel';
 import { isAuth, isAdmin } from '../util';
 
 const router = express.Router();
@@ -15,13 +16,12 @@ router.get('/', async (req, res) => {
     },
   }
     : {};
+
   const sortOrder = req.query.sortOrder
     ? req.query.sortOrder === 'lowest'
-      ? { price: 1 }
-      : { price: -1 }
-    : { _id: -1 };
-  const products = await Product.find({...category, ...searchKeyword}).sort(
-    sortOrder
+      ? { price: 1 } : { price: -1 } : { _id: -1 };
+  const products = await Product.find({ ...category, ...searchKeyword }).sort(
+    sortOrder,
   );
   res.send(products);
 });
@@ -33,12 +33,11 @@ router.get('/:id', async (req, res) => {
     return res
       .status(200)
       .send(product);
-  } else {
-    return res
-      .status(404)
-      .send({ message: 'Product not found' });
   }
-})
+  return res
+    .status(404)
+    .send({ message: 'Product not found' });
+});
 
 // api router for setting new products into database
 router.post('/', isAuth, isAdmin, async (req, res) => {
@@ -71,12 +70,13 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
       rating: Number(req.body.rating),
       comment: req.body.comment,
     };
-    product.reviews.reduce((a, c) => c.rating + a, 0) /
-    product.reviews.length;
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+    product.rating = (product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length);
     const updatedProduct = await product.save();
     res.status(201).send({
       data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
-      message: 'Review Saved Successfully.',
+      message: 'Review saved successfully.',
     });
   } else {
     res.status(404).send({ message: 'Product Not Found' });
