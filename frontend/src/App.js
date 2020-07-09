@@ -14,6 +14,8 @@ import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
+import OrdersScreen from './screens/OrdersScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
   // set up authorization 
@@ -70,8 +72,8 @@ function App() {
         </aside>
         <main className='main'>
           <div className='content'>
-            {/* <Route path='/orders' component={OrdersScreen} /> */}
-            {/* <Route path='/profile' component={ProfileScreen} /> */}
+            <Route path='/orders' component={OrdersScreen} />
+            <Route path='/profile' component={ProfileScreen} />
             <Route path='/order/:id' component={OrderScreen} />
             <Route path='/products' component={ProductsScreen} />
             <Route path='/shipping' component={ShippingScreen} />

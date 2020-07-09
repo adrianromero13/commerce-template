@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import { saveProduct, listProducts, deleteProduct } from './../actions/productActions';
 
-// import './../index.css';
-
 
 function ProductsScreen(props) {
 

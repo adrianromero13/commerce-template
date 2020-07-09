@@ -1,3 +1,4 @@
+
 import {
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
@@ -5,6 +6,10 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
+  USER_LOGOUT,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from "../constants/userConstants";
 
 function userSigninReducer(state = {}, action) {
@@ -15,8 +20,21 @@ function userSigninReducer(state = {}, action) {
       return { loading: false, userInfo: action.payload };
     case USER_SIGNIN_FAIL:
       return { loading: false, error: action.payload };
-    default:
-      return state;
+    case USER_LOGOUT:
+      return {};
+    default: return state;
+  }
+}
+
+function userUpdateReducer(state = {}, action) {
+  switch (action.type) {
+    case USER_UPDATE_REQUEST:
+      return { loading: true };
+    case USER_UPDATE_SUCCESS:
+      return { loading: false, userInfo: action.payload };
+    case USER_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    default: return state;
   }
 }
 
@@ -25,15 +43,15 @@ function userRegisterReducer(state = {}, action) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
     case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload, success: true };
+      return { loading: false, userInfo: action.payload };
     case USER_REGISTER_FAIL:
-      return { loading: false, error: 'Failed to Register New User' };
-    default:
-      return state;
+      return { loading: false, error: action.payload };
+    default: return state;
   }
 }
 
 export {
   userSigninReducer,
   userRegisterReducer,
-}
+  userUpdateReducer,
+};

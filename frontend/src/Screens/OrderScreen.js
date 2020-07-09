@@ -43,26 +43,27 @@ function OrderScreen(props) {
   const { loading, order, error } = orderDetails;
 
   return (
-    loading ? <div>Loading ...</div> 
-    : error ? <div>{error}</div>
-    :
+    loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
+
     <div>
       <div className='placeOrder'>
         <div className='placeOrder-info'>
           <div>
-            <h3>Shipping</h3>
+            <h3>
+              Shipping
+          </h3>
             <div>
               {order.shipping.address}, {order.shipping.city},
-              {order.shipping.postalCode}, {order.shipping.country},
-            </div>
+          {order.shipping.postalCode}, {order.shipping.country},
+          </div>
             <div>
-              {order.isDelivered ? 'Delivered at ' + order.deliveredAt : 'Not Delivered.' }
+              {order.isDelivered ? 'Delivered at ' + order.deliveredAt : 'Not Delivered.'}
             </div>
           </div>
           <div>
             <h3>Payment</h3>
             <div>
-              payment Method: {order.payment.paymentMethod}
+              Payment Method: {order.payment.paymentMethod}
             </div>
             <div>
               {order.isPaid ? 'Paid at ' + order.paidAt : 'Not Paid.'}
@@ -71,12 +72,18 @@ function OrderScreen(props) {
           <div>
             <ul className='cart-list-container'>
               <li>
-                <h3>Shopping Cart</h3>
-                <div>Price</div>
+                <h3>
+                  Shopping Cart
+          </h3>
+                <div>
+                  Price
+          </div>
               </li>
               {
                 order.orderItems.length === 0 ?
-                  <div>Cart is empty</div>
+                  <div>
+                    Cart is empty
+          </div>
                   :
                   order.orderItems.map(item =>
                     <li key={item._id}>
@@ -88,6 +95,7 @@ function OrderScreen(props) {
                           <Link to={'/product/' + item.product}>
                             {item.name}
                           </Link>
+
                         </div>
                         <div>
                           Qty: {item.qty}
@@ -101,6 +109,8 @@ function OrderScreen(props) {
               }
             </ul>
           </div>
+
+
         </div>
         <div className='placeOrder-action'>
           <ul>
@@ -108,8 +118,8 @@ function OrderScreen(props) {
               {loadingPay && <div>Finishing Payment...</div>}
               {!order.isPaid &&
                 <PayPalButton
-                amount={order.totalPrice}
-                onSuccess={handleSuccessPayment} />
+                  amount={order.totalPrice}
+                  onSuccess={handleSuccessPayment} />
               }
             </li>
             <li>
@@ -132,7 +142,11 @@ function OrderScreen(props) {
               <div>${order.totalPrice}</div>
             </li>
           </ul>
+
+
+
         </div>
+
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Axios from 'axios';
 import Cookie from 'js-cookie';
 
 import {

@@ -15,11 +15,14 @@ function HomeScreen(props) {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const category = props.match.params.id ? props.match.params.id : '';
-  const productList = useSelector(state => state.productList);
+  const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(listProducts(category));
+
     return () => {
       //
     };
@@ -38,13 +41,15 @@ function HomeScreen(props) {
   return (
     <>
       {category && <h2>{category}</h2>}
+
       <ul className='filter'>
         <li>
           <form onSubmit={submitHandler}>
             <input
-              name='searckKeyword'
+              name='searchKeyword'
               onChange={(e) => setSearchKeyword(e.target.value)}
             />
+            <button type='submit'>Search</button>
           </form>
         </li>
         <li>
@@ -62,22 +67,22 @@ function HomeScreen(props) {
         <div>{error}</div>
       ) : (
             <ul className='products'>
-              {products.map(product =>
+              {products.map((product) => (
                 <li key={product._id}>
-                  <div className="product">
+                  <div className='product'>
                     <Link to={'/product/' + product._id}>
                       <img
-                        className="product-image"
+                        className='product-image'
                         src={product.image}
-                        alt="product"
+                        alt='product'
                       />
                     </Link>
-                    <div className="product-name">
+                    <div className='product-name'>
                       <Link to={'/product/' + product._id}>{product.name}</Link>
                     </div>
-                    <div className="product-brand">{product.brand}</div>
-                    <div className="product-price">${product.price}</div>
-                    <div className="product-rating">
+                    <div className='product-brand'>{product.brand}</div>
+                    <div className='product-price'>${product.price}</div>
+                    <div className='product-rating'>
                       <Rating
                         value={product.rating}
                         text={product.numReviews + ' reviews'}
@@ -85,7 +90,7 @@ function HomeScreen(props) {
                     </div>
                   </div>
                 </li>
-              )}}
+              ))}
             </ul>
           )}
     </>
