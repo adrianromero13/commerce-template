@@ -55,6 +55,9 @@ function OrderScreen(props) {
               {order.shipping.address}, {order.shipping.city},
               {order.shipping.postalCode}, {order.shipping.country},
             </div>
+            <div>
+              {order.isDelivered ? 'Delivered at ' + order.deliveredAt : 'Not Delivered.' }
+            </div>
           </div>
           <div>
             <h3>Payment</h3>

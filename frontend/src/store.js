@@ -6,14 +6,13 @@ import {
 } from 'redux';
 import Cookie from 'js-cookie';
 import thunk from 'redux-thunk';
+
 import {
   productListReducer,
   productDetailsReducer,
   productSaveReducer,
   productDeleteReducer,
 } from './reducers/productReducers';
-import { cartReducer } from './reducers/cartReducers';
-import { userSigninReducer, userRegisterReducer } from './reducers/userReducers';
 import {
   orderCreateReducer,
   orderDetailsReducer,
@@ -22,6 +21,8 @@ import {
   orderListReducer,
   orderDeleteReducer,
 } from './reducers/orderReducers';
+import { cartReducer } from './reducers/cartReducers';
+import { userSigninReducer, userRegisterReducer } from './reducers/userReducers';
 
 
 const cartItems = Cookie.getJSON('cartItems') || [];
@@ -49,7 +50,6 @@ const reducer = combineReducers({
   myOrderlist: myOrderListReducer,
   orderList: orderListReducer,
   orderDelete: orderDeleteReducer,
-
 
 });
 

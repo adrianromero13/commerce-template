@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import CheckoutSteps from '../components/CheckoutSteps';
-import {createOrder} from '../actions/orderActions';
+import { createOrder } from '../actions/orderActions';
 
 
 
@@ -24,26 +24,25 @@ function PlaceOrderScreen(props) {
   if (!shipping.address) {
     props.history.push('/shipping');
   }
-  
+
   else if (!payment.paymentMethod) {
     props.history.push('/payment');
   }
   const { loading, success, error, order } = orderCreate;
-  
+
   const dispatch = useDispatch();
 
   const placeOrderHandler = () => {
-    // create the order
     dispatch(createOrder({
-      orderItems: {
-      cartItems, 
-      shipping, 
-      payment, 
-      itemsPrice, 
-      shippingPrice, 
-      taxPrice, 
-      totalPrice,
-      }
+      orderItems:{
+        cartItems,
+        shipping,
+        payment,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      },
     }));
   }
 
@@ -63,7 +62,7 @@ function PlaceOrderScreen(props) {
           </div>
           <div>
             {cart.shipping.address}, {cart.shipping.city}
-          <br/>
+            <br />
             {cart.shipping.postalCode}, {cart.shipping.country},
           </div>
           <div>

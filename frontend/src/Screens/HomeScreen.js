@@ -19,7 +19,7 @@ function HomeScreen(props) {
   const { products, loading, error } = productList;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(listProducts(category)); // here, next is create actions for listProducts 
+    dispatch(listProducts(category));
     return () => {
       //
     };

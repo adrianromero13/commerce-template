@@ -49,7 +49,7 @@ const orderItemSchema = new mongoose.Schema({
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
-    required: true,
+    required: true
   },
 });
 
@@ -92,7 +92,7 @@ const orderSchema = new mongoose.Schema({
     type: Date,
   },
 }, {
-  timestamps: true,
+  timestamps: true
 });
 
 const orderModel = mongoose.model('Order', orderSchema);
