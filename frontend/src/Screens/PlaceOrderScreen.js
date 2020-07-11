@@ -5,65 +5,56 @@ import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
 
-
-
-
 function PlaceOrderScreen(props) {
 
-  // define cart 
+  // state rel variables
   const cart = useSelector(state => state.cart);
   const { cartItems, shipping, payment } = cart;
-  // pricing logic constants
-  const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
-  const shippingPrice = itemsPrice > 100 ? 0 : 10;
-  const taxPrice = 0.10 * itemsPrice;
-  const totalPrice = itemsPrice + shippingPrice + taxPrice;
-
+  if (!shipping.address) {
+    props.history.push("/shipping");
+  } else if (!payment.paymentMethod) {
+    props.history.push("/payment");
+  }
 
   const orderCreate = useSelector(state => state.orderCreate);
-  if (!shipping.address) {
-    props.history.push('/shipping');
-  }
-
-  else if (!payment.paymentMethod) {
-    props.history.push('/payment');
-  }
   const { loading, success, error, order } = orderCreate;
 
+
+  // pricing variables
+  const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
+  const shippingPrice = itemsPrice > 100 ? 0 : 10;
+  const taxPrice = 0.15 * itemsPrice;
+  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+
+  // use dispatch
   const dispatch = useDispatch();
 
+  // create an order
   const placeOrderHandler = () => {
     dispatch(createOrder({
-      orderItems:{
-        cartItems,
-        shipping,
-        payment,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice,
-      },
+      orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
+      taxPrice, totalPrice
     }));
   }
 
   useEffect(() => {
     if (success) {
-      props.history.push('/order/' + order._id);
+      props.history.push("/order/" + order._id);
     }
+
   }, [success]);
 
   return (
     <div>
-      <CheckoutSteps step1 step2 step3 step4 />
-      <div className='placeOrder'>
-        <div className='placeOrder-info'>
+      <CheckoutSteps step1 step2 step3 step4 ></CheckoutSteps>
+      <div className="placeorder">
+        <div className="placeorder-info">
           <div>
             <h3>Shipping</h3>
+            <div>
+              {cart.shipping.address}, {cart.shipping.city},
+          {cart.shipping.postalCode}, {cart.shipping.country},
           </div>
-          <div>
-            {cart.shipping.address}, {cart.shipping.city}
-            <br />
-            {cart.shipping.postalCode}, {cart.shipping.country},
           </div>
           <div>
             <h3>Payment</h3>
@@ -72,7 +63,7 @@ function PlaceOrderScreen(props) {
             </div>
           </div>
           <div>
-            <ul className='cart-list-container'>
+            <ul className="cart-list-container">
               <li>
                 <h3>Shopping Cart</h3>
                 <div>Price</div>
@@ -82,21 +73,22 @@ function PlaceOrderScreen(props) {
                   <div>Cart is empty</div>
                   :
                   cartItems.map(item =>
-                    <li key={item._id}>
-                      <div className='cart-image'>
-                        <img src={item.image} alt='product' />
+                    <li>
+                      <div className="cart-image">
+                        <img src={item.image} alt="product" />
                       </div>
-                      <div className='cart-name'>
+                      <div className="cart-name">
                         <div>
-                          <Link to={'/product/' + item.product}>
+                          <Link to={"/product/" + item.product}>
                             {item.name}
                           </Link>
+
                         </div>
                         <div>
                           Qty: {item.qty}
                         </div>
                       </div>
-                      <div className='cart-price'>
+                      <div className="cart-price">
                         ${item.price}
                       </div>
                     </li>
@@ -105,11 +97,10 @@ function PlaceOrderScreen(props) {
             </ul>
           </div>
         </div>
-
-        <div className='placeOrder-action'>
+        <div className="placeorder-action">
           <ul>
             <li>
-              <button className='button primary full-width' onClick={placeOrderHandler}>Place Order</button>
+              <button className="button primary full-width" onClick={placeOrderHandler} >Place Order</button>
             </li>
             <li>
               <h3>Order Summary</h3>

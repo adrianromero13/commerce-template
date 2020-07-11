@@ -26,9 +26,7 @@ aws.config.update({
   accessKeyId: config.accessKeyId,
   secretAccessKey: config.secretAccessKey,
 });
-
 const s3 = new aws.S3();
-
 const storageS3 = multerS3({
   s3,
   bucket: 'amazona-bucket',
@@ -38,9 +36,7 @@ const storageS3 = multerS3({
     cb(null, file.originalname);
   },
 });
-
 const uploadS3 = multer({ storage: storageS3 });
-
 router.post('/s3', uploadS3.single('image'), (req, res) => {
   res.send(req.file.location);
 });

@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signin } from '../actions/userActions';
+import { Link } from 'react-router-dom';
 
-// import './../index.css';
+import { signin } from '../actions/userActions';
 
 function SigninScreen(props) {
 
+  // state variables
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin;
+
+  // use dispatch
   const dispatch = useDispatch();
-  const redirect = props.location.search?props.location.search.split('=')[1]: '/';
+
+  const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
 
   useEffect(() => {
     if (userInfo) {
@@ -22,14 +25,17 @@ function SigninScreen(props) {
     return () => {
       //
     };
-  }, [userInfo])
+  }, [userInfo]);
+
+  // handlers
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(signin(email, password));
   }
+
   return (
     <div className='form'>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} >
         <ul className='form-container'>
           <li>
             <h2>Sign-In</h2>
@@ -39,29 +45,29 @@ function SigninScreen(props) {
             {error && <div>{error}</div>}
           </li>
           <li>
-            <label for='email'>
-              Email
-                    </label>
-            <input type='email' name='email' id='email' onChange={(e) => setEmail(e.target.value)}>
+            <label htmlFor='email'>Email</label>
+            <input
+              type='email'
+              name='email'
+              id='email'
+              onChange={(e) => setEmail(e.target.value)}>
             </input>
           </li>
           <li>
-            <label for='password'>
-              Password
-                    </label>
-            <input type='password' name='password' id='password' onChange={(e) => setPassword(e.target.value)}>
+            <label htmlFor='password'>Password</label>
+            <input
+              type='password'
+              id='password'
+              name='password'
+              onChange={(e) => setPassword(e.target.value)}>
             </input>
           </li>
           <li>
-            <button type='submit' className='button primary'>
-              Sign In
-                    </button>
+            <button type='submit' className='button primary'>Signin</button>
           </li>
+          <li>New to e-commerce?</li>
           <li>
-            New to CommerceApp?
-                </li>
-          <li>
-            <Link to={redirect === '/' ? 'register': 'register?redirect' + redirect} className='button secondary text-center' >Create your CommerceApp account</Link>
+            <Link to={redirect === '/' ? 'register' : 'register?redirect=' + redirect} className='button secondary text-center' >Create your amazona account</Link>
           </li>
         </ul>
       </form>

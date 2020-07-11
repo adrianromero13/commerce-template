@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-// set shipping schema
 const shippingSchema = {
   address: {
     type: String,
@@ -20,15 +19,10 @@ const shippingSchema = {
   },
 };
 
-// set up payment schema
 const paymentSchema = {
-  paymentMethod: {
-    type: String,
-    required: true,
-  },
+  paymentMethod: { type: String, required: true }
 };
 
-// set up orderItemSchema
 const orderItemSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -53,16 +47,13 @@ const orderItemSchema = new mongoose.Schema({
   },
 });
 
-// set up order schema
 const orderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  orderItems: [
-    orderItemSchema,
-  ],
+  orderItems: [orderItemSchema],
   shipping: shippingSchema,
   payment: paymentSchema,
   itemsPrice: {
@@ -95,5 +86,6 @@ const orderSchema = new mongoose.Schema({
   timestamps: true
 });
 
-const orderModel = mongoose.model('Order', orderSchema);
+const orderModel = mongoose.model("Order", orderSchema);
+
 export default orderModel;

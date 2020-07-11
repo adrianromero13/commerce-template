@@ -28,11 +28,11 @@ const listProducts = (
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get(
       '/api/products?category=' +
-        category +
-        '&searchKeyword=' +
-        searchKeyword +
-        '&sortOrder=' +
-        sortOrder
+      category +
+      '&searchKeyword=' +
+      searchKeyword +
+      '&sortOrder=' +
+      sortOrder
     );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (error) {

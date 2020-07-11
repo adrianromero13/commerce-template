@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 
-// use dotenv
 dotenv.config();
 
 export default {

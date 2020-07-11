@@ -1,29 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import cartScreen from '../components/CheckoutSteps';
 import { saveShipping } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 
 function ShippingScreen(props) {
 
+  // details variable for state
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('');
 
+  // use dispatch
   const dispatch = useDispatch();
 
+  // handlers
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShipping({ address, city, postalCode, country }));
+    dispatch(saveShipping({
+      address,
+      city,
+      postalCode,
+      country,
+    }));
     props.history.push('payment');
   }
 
   return (
     <div>
-      <CheckoutSteps step1 step2 />
+      <CheckoutSteps step1 step2 ></CheckoutSteps>
       <div className='form'>
         <form onSubmit={submitHandler} >
           <ul className='form-container'>
@@ -31,9 +37,7 @@ function ShippingScreen(props) {
               <h2>Shipping</h2>
             </li>
             <li>
-              <label htmlFor='address'>
-                Address
-          </label>
+              <label htmlFor='address'>Address</label>
               <input
                 type='text'
                 name='address'
@@ -42,9 +46,7 @@ function ShippingScreen(props) {
               </input>
             </li>
             <li>
-              <label htmlFor='city'>
-                City
-          </label>
+              <label htmlFor='city'>City</label>
               <input
                 type='text'
                 name='city'
@@ -53,9 +55,7 @@ function ShippingScreen(props) {
               </input>
             </li>
             <li>
-              <label htmlFor='postalCode'>
-                Postal Code
-          </label>
+              <label htmlFor='postalCode'>Postal Code</label>
               <input
                 type='text'
                 name='postalCode'
@@ -64,9 +64,7 @@ function ShippingScreen(props) {
               </input>
             </li>
             <li>
-              <label htmlFor='country'>
-                Country
-          </label>
+              <label htmlFor='country'>Country</label>
               <input
                 type='text'
                 name='country'
@@ -74,9 +72,8 @@ function ShippingScreen(props) {
                 onChange={(e) => setCountry(e.target.value)}>
               </input>
             </li>
-
             <li>
-              <button type='submit' className='button primary text-center' >Continue</button>
+              <button type='submit' className='button primary'>Continue</button>
             </li>
           </ul>
         </form>

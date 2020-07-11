@@ -7,7 +7,7 @@ function PaypalButton(props) {
   const [sdkReady, setSdkReady] = useState(false);
 
   const addPaypalSdk = async () => {
-    const result = await axios.get("/api/config/paypal");
+    const result = await axios.get('/api/config/paypal');
     const clientID = result.data;
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -50,8 +50,10 @@ function PaypalButton(props) {
 
   const Button = window.paypal.Buttons.driver('react', { React, ReactDOM });
 
-  return <Button {...props} createOrder={(data, actions) => createOrder(data, actions)}
-    onApprove={(data, actions) => onApprove(data, actions)} />
+  return (
+    <Button {...props} createOrder={(data, actions) => createOrder(data, actions)}
+      onApprove={(data, actions) => onApprove(data, actions)} />
+  )
 }
 
 export default PaypalButton; 

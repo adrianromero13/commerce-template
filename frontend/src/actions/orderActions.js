@@ -1,4 +1,5 @@
 import Axios from 'axios';
+
 import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -26,7 +27,7 @@ const createOrder = (order) => async (dispatch, getState) => {
     const { userSignin: { userInfo } } = getState();
     const { data: { data: newOrder } } = await Axios.post('/api/orders', order, {
       headers: {
-        Authorization: 'Bearer ' + userInfo.token
+        Authorization: ' Bearer ' + userInfo.token
       }
     });
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
@@ -105,6 +106,7 @@ const deleteOrder = (orderId) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DELETE_FAIL, payload: error.message });
   }
 }
+
 export {
   createOrder,
   detailsOrder,

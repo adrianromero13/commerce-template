@@ -1,53 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { listMyOrders } from '../actions/orderActions';
 import { logout, update } from '../actions/userActions';
-
+import { listMyOrders } from '../actions/orderActions';
 
 function ProfileScreen(props) {
 
-  // useState constants
+  // state variables
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  // define dispatch
-  const dispatch = useDispatch();
-
-  // check to see if user is signed in
   const userSignin = useSelector(state => state.userSignin);
   const { userInfo } = userSignin;
-
-  // handle the logout
-  const handleLogout = () => {
-    dispatch(logout());
-    props.history.push('/signin');
-  }
-
-  // handle submit of form
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(update({
-      userId: userInfo._id,
-      email,
-      name,
-      password,
-    }))
-  }
 
   const userUpdate = useSelector(state => state.userUpdate);
   const { loading, success, error } = userUpdate;
 
   const myOrderList = useSelector(state => state.myOrderList);
-  const {
-    loading: loadingOrders,
-    orders,
-    error: errorOrders,
-  } = myOrderList;
+  const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
 
-  // useEffect
+  // use dispatch
+  const dispatch = useDispatch();
+
+  // handler functions
+  const handleLogout = () => {
+    dispatch(logout());
+    props.history.push('/signin');
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(update({ userId: userInfo._id, email, name, password }))
+  }
+
   useEffect(() => {
     if (userInfo) {
       console.log(userInfo.name)
@@ -61,8 +48,6 @@ function ProfileScreen(props) {
     };
   }, [userInfo])
 
-
-  // handle return
   return (
     <div className='profile'>
       <div className='profile-info'>
@@ -78,9 +63,7 @@ function ProfileScreen(props) {
                 {success && <div>Profile Saved Successfully.</div>}
               </li>
               <li>
-                <label htmlFor='name'>
-                  Name
-          </label>
+                <label htmlFor='name'>Name</label>
                 <input
                   value={name}
                   type='name'
@@ -90,9 +73,7 @@ function ProfileScreen(props) {
                 </input>
               </li>
               <li>
-                <label htmlFor='email'>
-                  Email
-          </label>
+                <label htmlFor='email'>Email</label>
                 <input
                   value={email}
                   type='email'
@@ -111,14 +92,12 @@ function ProfileScreen(props) {
                   onChange={(e) => setPassword(e.target.value)}>
                 </input>
               </li>
-
               <li>
                 <button type='submit' className='button primary'>Update</button>
               </li>
               <li>
                 <button type='button' onClick={handleLogout} className='button secondary full-width'>Logout</button>
               </li>
-
             </ul>
           </form>
         </div>
@@ -153,7 +132,6 @@ function ProfileScreen(props) {
       </div>
     </div>
   )
-
 }
 
 export default ProfileScreen;

@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { saveProduct, listProducts, deleteProduct } from './../actions/productActions';
-
+import {
+  saveProduct,
+  listProducts,
+  deleteProduct,
+} from '../actions/productActions';
 
 function ProductsScreen(props) {
 
+  // order detail constant variables
   const [modalVisible, setModalVisible] = useState(false);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
@@ -16,7 +20,9 @@ function ProductsScreen(props) {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
+  const [uploading, setUploading] = useState(false);
 
+  // use state variables
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
 
@@ -33,6 +39,8 @@ function ProductsScreen(props) {
     success: successDelete,
     error: errorDelete,
   } = productDelete;
+
+  // use dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,6 +53,7 @@ function ProductsScreen(props) {
     };
   }, [successSave, successDelete]);
 
+  // edit modal
   const openModal = (product) => {
     setModalVisible(true);
     setId(product._id);
@@ -57,6 +66,7 @@ function ProductsScreen(props) {
     setCountInStock(product.countInStock);
   };
 
+  // function handlers
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
@@ -75,6 +85,27 @@ function ProductsScreen(props) {
 
   const deleteHandler = (product) => {
     dispatch(deleteProduct(product._id));
+  };
+
+  const uploadFileHandler = (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append('image', file);
+    setUploading(true);
+    axios
+      .post('/api/uploads/s3', bodyFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        setImage(response.data);
+        setUploading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setUploading(false);
+      });
   };
 
   return (
@@ -96,7 +127,6 @@ function ProductsScreen(props) {
                 {loadingSave && <div>Loading...</div>}
                 {errorSave && <div>{errorSave}</div>}
               </li>
-
               <li>
                 <label htmlFor='name'>Name</label>
                 <input
@@ -126,8 +156,8 @@ function ProductsScreen(props) {
                   id='image'
                   onChange={(e) => setImage(e.target.value)}
                 ></input>
-                {/* <input type='file' onChange={uploadFileHandler}></input>
-                {uploading && <div>Uploading...</div>} */}
+                <input type='file' onChange={uploadFileHandler}></input>
+                {uploading && <div>Uploading...</div>}
               </li>
               <li>
                 <label htmlFor='brand'>Brand</label>
@@ -186,7 +216,6 @@ function ProductsScreen(props) {
           </form>
         </div>
       )}
-
       <div className='product-list'>
         <table className='table'>
           <thead>
@@ -226,4 +255,5 @@ function ProductsScreen(props) {
     </div>
   );
 }
+
 export default ProductsScreen;
