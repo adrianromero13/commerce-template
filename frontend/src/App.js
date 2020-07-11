@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 
+import Banner from './components/Banner';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
@@ -77,6 +78,7 @@ function App() {
         </aside>
         <main className='main'>
           <div className='content'>
+            <Banner />
             <Route path='/orders' component={OrdersScreen} />
             <Route path='/profile' component={ProfileScreen} />
             <Route path='/order/:id' component={OrderScreen} />
@@ -92,7 +94,7 @@ function App() {
             <Route path='/' exact={true} component={HomeScreen} />
           </div>
         </main>
-        <footer className='footer'>All right reserved.</footer>
+        <footer className='footer'>Created by: Adrian</footer>
       </div>
     </BrowserRouter>
   );
