@@ -47,8 +47,8 @@ function PlaceOrderScreen(props) {
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4 ></CheckoutSteps>
-      <div className="placeorder">
-        <div className="placeorder-info">
+      <div className="placeOrder">
+        <div className="placeOrder-info">
           <div>
             <h3>Shipping</h3>
             <div>
@@ -97,7 +97,7 @@ function PlaceOrderScreen(props) {
             </ul>
           </div>
         </div>
-        <div className="placeorder-action">
+        <div className="placeOrder-action">
           <ul>
             <li>
               <button className="button primary full-width" onClick={placeOrderHandler} >Place Order</button>

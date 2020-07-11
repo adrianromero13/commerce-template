@@ -71,7 +71,7 @@ function App() {
             </li>
 
             <li>
-              <Link to='/category/Posters'>Posters</Link>
+              <Link to='/category/Poster'>Posters</Link>
             </li>
           </ul>
         </aside>

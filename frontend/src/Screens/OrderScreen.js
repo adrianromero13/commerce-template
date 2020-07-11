@@ -40,8 +40,8 @@ function OrderScreen(props) {
     loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
 
       <div>
-        <div className='placeorder'>
-          <div className='placeorder-info'>
+        <div className='placeOrder'>
+          <div className='placeOrder-info'>
             <div>
               <h3>Shipping</h3>
               <div>
@@ -93,9 +93,9 @@ function OrderScreen(props) {
               </ul>
             </div>
           </div>
-          <div className='placeorder-action'>
+          <div className='placeOrder-action'>
             <ul>
-              <li className='placeorder-actions-payment'>
+              <li className='placeOrder-actions-payment'>
                 {loadingPay && <div>Finishing Payment...</div>}
                 {!order.isPaid &&
                   <PaypalButton
