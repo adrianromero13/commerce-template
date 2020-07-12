@@ -2,12 +2,19 @@
   "name": "commerce-based-app",
   "version": "1.0.0",
   "description": "Commerce mock application",
-  "main": "index.js",
+  "main": "server.js",
+  "engines": {
+    "node": "12.13.1",
+    "npm": "6.12.1"
+  },
   "scripts": {
-    "start": "nodemon --watch backend --exec babel-node backend/server.js",
-    "build": "rm -rf dist && babel backend -d dist",
-    "test": "react-scripts test",
-    "heroku-postbuild": "npm run build && cd frontend && npm install && npm run build"
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,10 +27,6 @@
     "url": "https://github.com/adrianromero13/commerce-template/issues"
   },
   "homepage": "https://github.com/adrianromero13/commerce-template#readme",
-  "engines": {
-    "node": "12.13.1",
-    "npm": "6.12.1"
-  },
   "dependencies": {
     "aws-sdk": "^2.711.0",
     "body-parser": "^1.19.0",
@@ -42,6 +45,7 @@
     "@babel/node": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@types/node": "^14.0.22",
+    "concurrently": "^5.2.0",
     "dispatch": "^1.0.2",
     "nodemon": "^2.0.4"
   }
