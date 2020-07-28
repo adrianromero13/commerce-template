@@ -25,12 +25,13 @@ router.post('/', upload.single('image'), (req, res) => {
 aws.config.update({
   accessKeyId: config.accessKeyId,
   secretAccessKey: config.secretAccessKey,
+  region: 'us-west-1',
 });
-const s3 = new aws.S3();
+const s3 = new aws.S3({apiVersion: '2006-03-01'});
 const storageS3 = multerS3({
   s3,
-  bucket: 'amazona-bucket',
-  acl: 'public-read',
+  bucket: 'commercepikel',
+  acl: 'my-products',
   contentType: multerS3.AUTO_CONTENT_TYPE,
   key(req, file, cb) {
     cb(null, file.originalname);

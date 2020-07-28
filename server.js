@@ -36,7 +36,7 @@ app.get('/api/config/paypal', (req, res) => {
   res.send(config.PAYPAL_CLIENT_ID);
 });
 
-app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
+app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
