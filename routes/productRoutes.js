@@ -1,6 +1,6 @@
-import express from 'express';
-import Product from '../models/productModel';
-import { isAuth, isAdmin } from '../util';
+const express = require('express');
+const Product = require('../models/productModel');
+const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
@@ -8,11 +8,11 @@ router.get('/', async (req, res) => {
   const category = req.query.category ? { category: req.query.category } : {};
   const searchKeyword = req.query.searchKeyword
     ? {
-        name: {
-          $regex: req.query.searchKeyword,
-          $options: 'i',
-        },
-      }
+      name: {
+        $regex: req.query.searchKeyword,
+        $options: 'i',
+      },
+    }
     : {};
   const sortOrder = req.query.sortOrder
     ? req.query.sortOrder === 'lowest'
@@ -108,5 +108,4 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
   }
   return res.status(500).send({ message: ' Error in Creating Product.' });
 });
-
-export default router;
+module.exports = router;

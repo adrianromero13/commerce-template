@@ -3,14 +3,12 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const routes = require('./routes');
-
 const config = require('./config');
 
-// import userRoute from './routes/userRoutes';
-// import productRoute from './routes/productRoutes';
-// import orderRoute from './routes/orderRoutes';
-// import uploadRoute from './routes/uploadRoutes';
+const userRoute = require('./routes/userRoutes');
+const productRoute = require('./routes/productRoutes');
+const orderRoute = require('./routes/orderRoutes');
+const uploadRoute = require('./routes/uploadRoutes');
 
 const mongodbUrl = config.MONGODB_URL;
 
@@ -23,11 +21,6 @@ mongoose
   .catch((error) => console.log(error.reason));
 
 const app = express();
-
-app.use(routes);
-
-
-
 
 app.use(bodyParser.json());
 
