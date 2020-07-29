@@ -121,7 +121,7 @@ function ProductsScreen(props) {
           <form onSubmit={submitHandler}>
             <ul className='form-container'>
               <li>
-                <h2>Create Product</h2>
+                <h2>Create New Product</h2>
               </li>
               <li>
                 {loadingSave && <div>Loading...</div>}
