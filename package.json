@@ -4,8 +4,7 @@
   "description": "Commerce mock application",
   "main": "server.js",
   "engines": {
-    "node": "12.13.1",
-    "npm": "6.12.1"
+    "node": "12.13.1"
   },
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -16,17 +15,9 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/adrianromero13/commerce-template.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/adrianromero13/commerce-template/issues"
-  },
-  "homepage": "https://github.com/adrianromero13/commerce-template#readme",
   "dependencies": {
     "aws-sdk": "^2.722.0",
     "body-parser": "^1.19.0",
